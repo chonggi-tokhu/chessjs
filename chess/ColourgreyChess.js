@@ -1426,7 +1426,7 @@ function ColourgreyChessJS(elid) {
                         </div>`;
                             this.setboard();
                             for (var i = 0; i < this.cpieces.length; i++) {
-                                this.cpieces[i].html = `<img src="${themepath + "/" + this.cpieces[i].colour + this.cpieces[i].piecename}.png" width="18px" draggable="true" class="chesspiece">`
+                                this.cpieces[i].html = `<img src="${themepath + "/" + this.cpieces[i].colour + this.cpieces[i].piecename}.png" width="36px" draggable="true" class="chesspiece">`
                             }
                         }
                     },
