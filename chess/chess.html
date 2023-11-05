@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #chessboard .rank {
+            width: inherit;
+            height: 20px !important;
+            margin: 0%;
+        }
+        #chessboard .rank div {
+            float:left;
+            height: 20px !important;
+            width: 20px;
+            margin: 0%;
+        }
+        #chessboard .darksquare {
+            background:radial-gradient(#888,#101527);
+            color:#e9e0ef;
+        }
+        #chessboard .lightsquare {
+            background:#e9e0ef;
+            color:#060510;
+        }
+        #chessboard .rank div img {
+            position: relative;
+            left: 1px;
+            top: auto;
+            width: 90%;
+            height: 90%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <script src="./ColourgreyChess.js"></script>
+    <div id="chessboard"></div>
+    <div id="showcheckmate">
+        game is not started.
+    </div>
+    <script>
+        var chess1 = new ColourgreyChessJS("chessboard");
+        var chess = chess1.Chessboard;
+        chess.makevirtualboard(new ColourgreyChessJS().Chessboard);
+        chess.positionandsettingpieces("./img");
+        var boardel = document.getElementById(chess.elid);
+            var chesspieces000 = document.getElementsByClassName("chesspiece");
+            var positions = chess.positions;
+            boardel.addEventListener("dragover", function (e) {
+                e.preventDefault();
+            });
+            var a;
+            var b;
+            var doespiececapture;
+            boardel.addEventListener("drop", function (e) {
+                a = e.dataTransfer.getData("from");
+                b = e.dataTransfer.getData("from");
+                var toid = e.target.id;
+                doespiececapture = (toid == "") ? 1 : (e.target.parentElement.id !="") ? 1 : 0;
+                var piecethatwillbecaptured = (toid == "") ? toid : (e.target.parentElement.id != "") ? toid : 0;
+                var doespiececapture2 = (toid == "") ? 1 : (e.target.parentElement.id != "") ? 1 : 0;
+                    if (toid == "") {
+                        toid = e.target.parentElement.id;
+                    }
+                    chess.move({ piece: chess.board[chess.positions[e.dataTransfer.getData("from")]].piece, from: chess.positions[e.dataTransfer.getData("from")], to: chess.positions[toid],capturing:doespiececapture2,captpiece:(chess.board[chess.positions[toid]].piece)?chess.cpieces[chess.board[chess.positions[toid]].piece.upiecename]:undefined }, chess.board[chess.positions[e.dataTransfer.getData("from")]].piece.colour,function(){chess.movepos();chess.positionofpiece();});
+                /*if (chess.ischeckmate().mated){
+                    document.getElementById("showcheckmate").innerHTML=`${chess.ischeckmate().matedside} is mated now.`
+                }*/
+            });
+            boardel.addEventListener("dragstart", function (e) {
+                    console.log(e.target.parentElement.id);
+                    e.dataTransfer.setData("from", e.target.parentElement.id);
+                    console.log(chess.board[chess.positions[e.target.parentElement.id]].piece);
+                    e.dataTransfer.setData("c", e.target.outerHTML);
+                    e.dataTransfer.setData("parentel", e.target.parentElement);
+                });
+
+            for (var i = 0; i < chesspieces000.length; i++) {
+                chesspieces000[i].addEventListener("dragstart", function (e) {
+                    console.log(e.target.parentElement.id);
+                    e.dataTransfer.setData("from", e.target.parentElement.id);
+                    console.log(chess.board[chess.positions[e.target.parentElement.id]].piece);
+                    e.dataTransfer.setData("c", e.target.outerHTML);
+                    e.dataTransfer.setData("parentel", e.target.parentElement);
+                });
+            }
+    </script>
+</body>
+</html>
