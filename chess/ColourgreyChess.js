@@ -1158,12 +1158,10 @@ function ColourgreyChessJS(elid) {
                             if (this.cpieces[31].cpos == this.movesssslll("white")[i].to) {
                                 
                                 
-                                this.numbertorealmove(move, "from");
                                 rtv = true;
                                 break;
                             } else 
                                 if (i == this.movesssslll("white").length - 1) {
-                                    this.numbertorealmove(move, "from");
                                     rtv = false;
                                 } else {
                                     continue;
